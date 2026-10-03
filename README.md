@@ -12,7 +12,7 @@
 
 **An ultra-modern, cinematic, interactive promotional web experience inspired by the 3D animated theatrical world of Crayon Shin-chan.**
 
-[Features](#-key-features) • [Preview Gallery](#-visual-gallery) • [Tech Stack](#-technology-stack) • [Architecture](docs/ARCHITECTURE.md) • [Project Structure](#-project-structure) • [Local Development](#-getting-started-locally) • [Free Deployment Guide](#-free-deployment-guide)
+[Features](#-key-features) • [Preview Gallery](#-visual-gallery) • [Tech Stack](#-technology-stack) • [Architecture](docs/ARCHITECTURE.md) • [Project Structure](#-project-structure) • [Getting Started](#-getting-started-locally)
 
 </div>
 
@@ -173,152 +173,9 @@ disney-big-hero-6-official-experience/
 
 ---
 
-## 🌐 Free Deployment Guide
-
-This project is a **100% client-side static Single Page Application (SPA)** with zero backend or database requirements. You can host it completely **free forever** on any modern cloud hosting platform.
-
-Below are step-by-step instructions for the top free hosting providers:
-
-### Option 1: Vercel (⭐ Strongly Recommended)
-*Best for speed, zero configuration, automatic HTTPS, and global edge network.*
-
-1. Push your code to a [GitHub](https://github.com/) repository:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: Crayon Shin-chan 3D Web Experience"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/<your-repo-name>.git
-   git push -u origin main
-   ```
-2. Go to [vercel.com](https://vercel.com/) and sign in with GitHub.
-3. Click **"Add New..."** → **"Project"**.
-4. Select your repository from the list.
-5. Vercel automatically detects **Vite**:
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-6. Click **Deploy**. Your site will be live on an official `*.vercel.app` URL with automated continuous deployment on every `git push`.
-
----
-
-### Option 2: Render (Free Static Site)
-*Ideal if you want simple, reliable hosting on Render's free tier.*
-
-1. Push your repository to GitHub.
-2. Visit [render.com](https://render.com/) and log in.
-3. Click **"New +"** in the top navigation bar and select **"Static Site"**.
-4. Connect your GitHub account and choose this repository.
-5. Configure the build parameters:
-   - **Name**: `shinchan-3d-experience` (or your choice)
-   - **Branch**: `main`
-   - **Build Command**: `npm run build`
-   - **Publish Directory**: `dist`
-6. Click **"Create Static Site"**. Render will install dependencies, execute Vite build, and provide a free `*.onrender.com` SSL domain.
-
----
-
-### Option 3: Netlify (Free Tier)
-*Great for instant drag-and-drop or GitHub branch deployment.*
-
-**Via GitHub Integration**:
-1. Log in to [netlify.com](https://netlify.com/) and click **"Add new site"** → **"Import an existing project"**.
-2. Select **GitHub** and pick this repository.
-3. Build settings:
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-4. Click **"Deploy site"**. Your project will be published instantly with a free `*.netlify.app` domain.
-
-**Via Instant Manual Upload (No Git required)**:
-1. Run `npm run build` on your computer.
-2. Drag and drop the generated `dist` folder into the Netlify Dashboard upload box.
-
----
-
-### Option 4: Cloudflare Pages (100% Free & Unlimited Bandwidth)
-*Best for ultra-fast CDN delivery with zero bandwidth caps.*
-
-1. Go to [dash.cloudflare.com](https://dash.cloudflare.com/) → **Compute (Workers & Pages)** → **Create application** → **Pages**.
-2. Connect your GitHub repository.
-3. In **Build Settings**:
-   - **Framework Preset**: `Vite`
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-4. Click **"Save and Deploy"**.
-
----
-
-### Option 5: GitHub Pages (Directly from GitHub)
-*Deploy directly from your repository using GitHub Actions.*
-
-1. In your GitHub repository, go to **Settings** → **Pages**.
-2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
-3. Create a workflow file at `.github/workflows/deploy.yml`:
-   ```yaml
-   name: Deploy to GitHub Pages
-
-   on:
-     push:
-       branches: ['main']
-     workflow_dispatch:
-
-   permissions:
-     contents: read
-     pages: write
-     id-token: write
-
-   concurrency:
-     group: 'pages'
-     cancel-in-progress: true
-
-   jobs:
-     deploy:
-       environment:
-         name: github-pages
-         url: ${{ steps.deployment.outputs.page_url }}
-       runs-on: ubuntu-latest
-       steps:
-         - name: Checkout
-           uses: actions/checkout@v4
-         - name: Set up Node
-           uses: actions/setup-node@v4
-           with:
-             node-version: 20
-             cache: 'npm'
-         - name: Install dependencies
-           run: npm install
-         - name: Build
-           run: npm run build
-         - name: Setup Pages
-           uses: actions/configure-pages@v4
-         - name: Upload artifact
-           uses: actions/upload-pages-artifact@v3
-           with:
-             path: './dist'
-         - name: Deploy to GitHub Pages
-           id: deployment
-           uses: actions/deploy-pages@v4
-   ```
-4. Push to `main`. Your site will deploy to `https://<username>.github.io/<repo-name>/`.
-*(Note: If deploying to a GitHub Pages subfolder, specify `base: './'` in `vite.config.ts`)*.
-
----
-
-## ⚡ Deployment Readiness Checklist
-
-- [x] **Production Build Tested**: `npm run build` builds cleanly in < 300ms without errors.
-- [x] **TypeScript Validation**: `tsc --noEmit` checks with 0 type errors.
-- [x] **Zero Unused Assets**: Removed redundant video duplicates (~7.1MB) and raw images (~7MB).
-- [x] **Clean Architecture**: Legacy unused Big Hero 6 SVG templates and superseded components removed.
-- [x] **Optimized Dependencies**: Removed unused server and AI packages (`express`, `@google/genai`, `dotenv`, `tsx`).
-- [x] **Production `.gitignore`**: All sensitive files, logs, caches, and build folders excluded.
-- [x] **Modern SEO & OpenGraph**: Configured in `index.html` with Japanese typography and social sharing metadata.
-
----
-
 ## 📄 License & Credits
 
 This project was built for educational and portfolio demonstration purposes as an homage to the official *Crayon Shin-chan* franchise created by Yoshito Usui / Futabasha, Shin-Ei Animation, TV Asahi, and ADK.
 
 Released under the [MIT License](LICENSE).
+
