@@ -55,7 +55,7 @@ export const LivingCinemaSection: React.FC = () => {
       <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-t from-neutral-950 via-neutral-950/70 to-transparent pointer-events-none z-10" />
 
       {/* Clean, authentic movie copyright footer at the very bottom */}
-      <div className="relative z-20 w-full pb-16 pt-6 px-4 text-center">
+      <div className="relative z-20 w-full pb-20 sm:pb-16 pt-6 px-4 text-center">
         <p className="text-[10px] sm:text-[11px] font-mono tracking-widest text-neutral-400 uppercase">
           TOHO CO., LTD. • SHIN-EI ANIMATION • TV ASAHI • ADK EMOTIONS • FUTABASHA
         </p>

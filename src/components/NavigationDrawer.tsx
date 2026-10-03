@@ -17,26 +17,26 @@ export const NavigationDrawer: React.FC<Props> = ({
 }) => {
   return (
     <>
-      {/* Right Edge Navigation Tab Handle */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 z-30 flex items-center select-none">
+      {/* Right Edge Navigation Tab Handle (Fixed so it stays accessible at all scroll points) */}
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center select-none">
         <button
           onClick={() => {
             sounds.playScan();
             onToggle();
           }}
-          className="group flex items-center gap-1.5 py-4 pl-2 pr-1 bg-white/80 hover:bg-white text-neutral-800 border-y border-l border-neutral-300 rounded-l-md shadow-md backdrop-blur-xs transition-all hover:pl-3"
-          title="Open Navigation"
-          aria-label="Navigation"
+          className="group flex items-center gap-1.5 py-3 sm:py-4 pl-2 pr-1 bg-white/90 hover:bg-white text-neutral-800 border-y border-l border-neutral-300 rounded-l-lg shadow-lg backdrop-blur-md transition-all hover:pl-3 active:scale-95 cursor-pointer"
+          title="Open Kasukabe Navigation"
+          aria-label="Open Navigation Menu"
         >
           {/* Concentric Circle Reticle */}
           <div className="relative w-4 h-4 flex items-center justify-center">
-            <span className="absolute inset-0 rounded-full border border-neutral-500 group-hover:border-red-600" />
+            <span className="absolute inset-0 rounded-full border border-neutral-500 group-hover:border-red-600 animate-pulse" />
             <span className="w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-red-600" />
           </div>
 
           {/* Vertical "NAVIGATION" Text */}
           <span
-            className="text-[9px] font-black tracking-widest text-neutral-600 group-hover:text-red-600 uppercase"
+            className="text-[9px] font-black tracking-widest text-neutral-700 group-hover:text-red-600 uppercase"
             style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
           >
             NAVIGATION
@@ -50,11 +50,11 @@ export const NavigationDrawer: React.FC<Props> = ({
           {/* Backdrop */}
           <div
             onClick={onToggle}
-            className="absolute inset-0 bg-neutral-900/40 backdrop-blur-xs animate-in fade-in duration-200"
+            className="absolute inset-0 bg-neutral-950/60 backdrop-blur-xs animate-in fade-in duration-200"
           />
 
           {/* Drawer Content */}
-          <div className="relative w-80 max-w-[85vw] h-full bg-neutral-950 text-white p-6 shadow-2xl flex flex-col justify-between border-l border-neutral-800 z-10 animate-in slide-in-from-right duration-200">
+          <div className="relative w-80 max-w-[88vw] h-full bg-neutral-950 text-white p-5 sm:p-6 shadow-2xl flex flex-col justify-between border-l border-neutral-800 z-10 overflow-y-auto animate-in slide-in-from-right duration-200 pb-safe">
             <div>
               {/* Header */}
               <div className="flex items-center justify-between border-b border-neutral-800 pb-4 mb-6">

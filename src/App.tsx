@@ -125,6 +125,7 @@ export default function App() {
         onSocialClick={(platform) => {
           showToast(`Opening Crayon Shin-chan 3D on ${platform}!`);
         }}
+        onOpenMenu={() => setNavDrawerOpen(true)}
       />
 
       {/* 4. Main Scrollable Container with Consecutive Character Showcases */}

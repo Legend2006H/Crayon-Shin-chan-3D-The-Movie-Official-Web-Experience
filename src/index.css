@@ -12,6 +12,20 @@
   html {
     scroll-behavior: smooth;
     font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent mobile tap delay and unwanted scroll gestures */
+  button, a, input, select {
+    touch-action: manipulation;
+  }
+
+  /* Safe area helpers for mobile notches and gesture bars */
+  .pb-safe {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+  .pt-safe {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
   }
 
   /* Custom subtle scrollbar */

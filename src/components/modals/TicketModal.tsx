@@ -154,20 +154,20 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
             </div>
 
             {/* Ticket count & Checkout */}
-            <div className="pt-3 border-t border-neutral-200 flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="pt-3 border-t border-neutral-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="flex items-center justify-between sm:justify-start gap-2">
                 <span className="text-xs font-bold text-neutral-700">TICKETS:</span>
                 <div className="flex items-center border border-neutral-300 rounded overflow-hidden">
                   <button
                     onClick={() => setTicketCount(Math.max(1, ticketCount - 1))}
-                    className="px-2.5 py-1 bg-neutral-100 hover:bg-neutral-200 text-xs font-bold"
+                    className="w-8 h-8 bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 text-xs font-bold flex items-center justify-center cursor-pointer"
                   >
                     -
                   </button>
-                  <span className="px-3 py-1 text-xs font-bold font-mono">{ticketCount}</span>
+                  <span className="px-3 py-1 text-xs font-bold font-mono min-w-8 text-center">{ticketCount}</span>
                   <button
                     onClick={() => setTicketCount(Math.min(10, ticketCount + 1))}
-                    className="px-2.5 py-1 bg-neutral-100 hover:bg-neutral-200 text-xs font-bold"
+                    className="w-8 h-8 bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 text-xs font-bold flex items-center justify-center cursor-pointer"
                   >
                     +
                   </button>
@@ -176,7 +176,7 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
 
               <button
                 onClick={handleBook}
-                className="bg-red-600 hover:bg-red-700 text-white font-black text-xs uppercase px-6 py-2.5 rounded shadow transition-all active:scale-98"
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-black text-xs uppercase px-6 py-3 sm:py-2.5 rounded shadow transition-all active:scale-98 cursor-pointer"
               >
                 SELECT SEATS & BUY
               </button>

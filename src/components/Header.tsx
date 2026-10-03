@@ -10,6 +10,7 @@ interface Props {
   onBannerClick?: () => void;
   onSocialClick?: (platform: string) => void;
   onTickerClick?: () => void;
+  onOpenMenu?: () => void;
 }
 
 export const Header: React.FC<Props> = ({
@@ -18,6 +19,7 @@ export const Header: React.FC<Props> = ({
   onBannerClick,
   onSocialClick,
   onTickerClick,
+  onOpenMenu,
 }) => {
   const navItems = [
     { id: 'slide-1' as const, label: 'SHIN-CHAN' },
@@ -29,14 +31,19 @@ export const Header: React.FC<Props> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full bg-neutral-950/95 backdrop-blur-md border-b border-white/10 select-none shadow-md">
-      {/* Hanging Official Theatrical Banner */}
-      <div className="absolute top-0 left-3 sm:left-6 md:left-8 z-50">
+      {/* Hanging Official Theatrical Banner for Tablet/Desktop */}
+      <div className="hidden sm:block absolute top-0 left-3 sm:left-6 md:left-8 z-50">
         <MovieBanner onClick={onBannerClick} />
       </div>
 
       {/* Main Header Bar */}
-      <div className="w-full h-12 flex items-center justify-between pl-44 sm:pl-52 md:pl-56 pr-4 sm:pr-8">
-        {/* Navigation Items (Clean Typographic Links, No Bulky Buttons) */}
+      <div className="w-full h-12 flex items-center justify-between px-2.5 sm:pl-52 md:pl-56 sm:pr-6 gap-2">
+        {/* Mobile Left: Compact Theatrical Badge */}
+        <div className="sm:hidden shrink-0 flex items-center">
+          <MovieBanner onClick={onBannerClick} />
+        </div>
+
+        {/* Navigation Items (Clean Typographic Links, Touch Scrollable) */}
         <nav className="flex items-center gap-1 sm:gap-4 md:gap-6 overflow-x-auto no-scrollbar py-1">
           {navItems.map((item) => {
             const isActive = activeSlide === item.id;
@@ -48,7 +55,7 @@ export const Header: React.FC<Props> = ({
                   sounds.playBlip(540);
                   onSelectSlide(item.id);
                 }}
-                className={`relative py-1 px-1.5 sm:px-2 text-[10px] sm:text-[11px] md:text-xs font-montserrat font-extrabold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
+                className={`relative py-1 px-1.5 sm:px-2 text-[10px] sm:text-[11px] md:text-xs font-montserrat font-extrabold uppercase tracking-wider whitespace-nowrap transition-colors duration-200 cursor-pointer ${
                   isActive
                     ? 'text-white'
                     : 'text-neutral-400 hover:text-neutral-200'
@@ -63,7 +70,7 @@ export const Header: React.FC<Props> = ({
           })}
         </nav>
 
-        {/* Center/Right Announcement Ticker (Subtle, Cinematic) */}
+        {/* Center/Right Announcement Ticker (Subtle, Cinematic - Hidden on small screens) */}
         <div
           onClick={() => {
             sounds.playShinchanGiggle();
@@ -77,50 +84,72 @@ export const Header: React.FC<Props> = ({
           </span>
         </div>
 
-        {/* Minimal Social Media Links */}
-        <div className="flex items-center gap-2.5 shrink-0 ml-3">
+        {/* Right Section: Mobile Menu Trigger & Social Links */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Quick Menu Button for Mobile */}
           <button
             type="button"
             onClick={() => {
-              sounds.playBlip(700);
-              onSocialClick?.('Twitter / X');
+              sounds.playScan();
+              onOpenMenu?.();
             }}
-            className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
-            title="Share on Twitter"
-            aria-label="Twitter"
+            className="flex items-center gap-1 px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white border border-white/15 text-[10px] font-black tracking-wider uppercase transition-all active:scale-95"
+            title="Open Kasukabe Navigation"
+            aria-label="Open Navigation Menu"
           >
-            <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
-              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-            </svg>
+            <div className="w-3.5 h-2.5 flex flex-col justify-between">
+              <span className="w-full h-0.5 bg-white rounded-full" />
+              <span className="w-full h-0.5 bg-white rounded-full" />
+              <span className="w-full h-0.5 bg-white rounded-full" />
+            </div>
+            <span className="hidden xs:inline sm:hidden md:inline">MENU</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              sounds.playBlip(600);
-              onSocialClick?.('Facebook');
-            }}
-            className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
-            title="Share on Facebook"
-            aria-label="Facebook"
-          >
-            <span className="font-bold text-[10px] leading-none font-serif">f</span>
-          </button>
+          {/* Social Media Links (compact on small screens) */}
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                sounds.playBlip(700);
+                onSocialClick?.('Twitter / X');
+              }}
+              className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
+              title="Share on Twitter"
+              aria-label="Twitter"
+            >
+              <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
+                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+              </svg>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              sounds.playBlip(500);
-              onSocialClick?.('YouTube');
-            }}
-            className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
-            title="Watch on YouTube"
-            aria-label="YouTube"
-          >
-            <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                sounds.playBlip(600);
+                onSocialClick?.('Facebook');
+              }}
+              className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
+              title="Share on Facebook"
+              aria-label="Facebook"
+            >
+              <span className="font-bold text-[10px] leading-none font-serif">f</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                sounds.playBlip(500);
+                onSocialClick?.('YouTube');
+              }}
+              className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-all active:scale-95"
+              title="Watch on YouTube"
+              aria-label="YouTube"
+            >
+              <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </header>

@@ -90,8 +90,8 @@ export const TrailerModal: React.FC<Props> = ({ isOpen, onClose, initialIndex = 
         </div>
 
         {/* Trailer Selector Tabs */}
-        <div className="flex items-center justify-between p-3 bg-neutral-900/80 border-t border-neutral-800 text-xs">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between p-2.5 sm:p-3 bg-neutral-900/80 border-t border-neutral-800 text-xs gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5 w-full sm:w-auto">
             {trailers.map((t, i) => (
               <button
                 key={i}
@@ -99,17 +99,17 @@ export const TrailerModal: React.FC<Props> = ({ isOpen, onClose, initialIndex = 
                   sounds.playBlip(520);
                   setActiveIdx(i);
                 }}
-                className={`px-3 py-1.5 rounded font-bold uppercase text-[10px] transition-colors ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-md font-bold uppercase text-[9px] sm:text-[10px] whitespace-nowrap transition-colors shrink-0 cursor-pointer ${
                   activeIdx === i
                     ? 'bg-red-600 text-white'
-                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700 active:bg-neutral-600'
                 }`}
               >
                 {i === 0 ? '★ 3D Feature' : `Trailer ${i + 1}`} ({t.duration})
               </button>
             ))}
           </div>
-          <span className="text-[10px] font-mono text-neutral-400 hidden sm:inline">
+          <span className="text-[10px] font-mono text-neutral-400 hidden md:inline shrink-0">
             IN THEATRES IN 3D & REAL D 3D
           </span>
         </div>

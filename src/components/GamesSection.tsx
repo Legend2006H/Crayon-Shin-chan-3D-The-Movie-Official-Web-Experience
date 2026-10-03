@@ -126,11 +126,20 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [isPlayingGame, gameOver]);
 
-  // Handle mouse / touch movement
+  // Handle mouse movement
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+    setShinchanX(Math.max(8, Math.min(92, xPct)));
+  };
+
+  // Handle touch movement on mobile screens
+  const handleTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current || e.touches.length === 0) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const xPct = ((touch.clientX - rect.left) / rect.width) * 100;
     setShinchanX(Math.max(8, Math.min(92, xPct)));
   };
 
@@ -269,23 +278,27 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                 </div>
               </div>
 
-              {/* Interactive Game Arena */}
+              {/* Interactive Game Arena with Touch & Pointer Support */}
               <div
                 ref={containerRef}
                 onMouseMove={handleMouseMove}
-                className="relative w-full aspect-16/10 bg-gradient-to-b from-sky-300 via-sky-100 to-amber-100 rounded-lg overflow-hidden border-2 border-neutral-800 shadow-inner cursor-crosshair"
+                onTouchStart={handleTouch}
+                onTouchMove={handleTouch}
+                style={{ touchAction: 'none' }}
+                className="relative w-full aspect-16/10 sm:aspect-16/10 bg-gradient-to-b from-sky-300 via-sky-100 to-amber-100 rounded-lg overflow-hidden border-2 border-neutral-800 shadow-inner cursor-crosshair select-none"
               >
                 {/* Sun & Clouds */}
-                <div className="absolute top-3 right-4 w-10 h-10 rounded-full bg-yellow-300/80 blur-xs" />
-                <div className="absolute top-5 left-8 bg-white/70 px-4 py-1.5 rounded-full text-[9px] text-neutral-400 font-mono">
-                  Move mouse or Left/Right arrows
+                <div className="absolute top-3 right-4 w-10 h-10 rounded-full bg-yellow-300/80 blur-xs pointer-events-none" />
+                <div className="absolute top-3 sm:top-5 left-3 sm:left-8 bg-white/80 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] text-neutral-600 font-mono pointer-events-none">
+                  <span className="hidden sm:inline">Move mouse or Left/Right keys</span>
+                  <span className="sm:hidden">Drag finger or tap buttons below</span>
                 </div>
 
                 {/* Falling Items */}
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="absolute text-2xl -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
+                    className="absolute text-2xl -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 pointer-events-none"
                     style={{ left: `${item.x}%`, top: `${item.y}%` }}
                   >
                     {item.type === 'chocobi' && (
@@ -333,7 +346,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                     <p className="text-sm font-bold">Your Score: {score}</p>
                     <button
                       onClick={handleStartGame}
-                      className="bg-red-600 hover:bg-red-700 text-white text-xs font-black uppercase px-4 py-2 rounded shadow-lg transition-transform active:scale-95"
+                      className="bg-red-600 hover:bg-red-700 text-white text-xs font-black uppercase px-5 py-2.5 rounded-lg shadow-lg transition-transform active:scale-95 cursor-pointer"
                     >
                       Play Again
                     </button>
@@ -341,8 +354,34 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                 )}
               </div>
 
+              {/* Mobile Dedicated On-Screen Touch Buttons */}
+              <div className="flex sm:hidden items-center justify-between gap-3 pt-1">
+                <button
+                  type="button"
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    setShinchanX((x) => Math.max(8, x - 14));
+                  }}
+                  className="flex-1 py-3 bg-neutral-900 active:bg-neutral-800 text-white font-black text-xs uppercase rounded-lg shadow-md flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer select-none"
+                >
+                  <span>◀</span>
+                  <span>MOVE LEFT</span>
+                </button>
+                <button
+                  type="button"
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    setShinchanX((x) => Math.min(92, x + 14));
+                  }}
+                  className="flex-1 py-3 bg-neutral-900 active:bg-neutral-800 text-white font-black text-xs uppercase rounded-lg shadow-md flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer select-none"
+                >
+                  <span>MOVE RIGHT</span>
+                  <span>▶</span>
+                </button>
+              </div>
+
               {/* Instructions */}
-              <div className="text-[10px] text-neutral-500 flex items-center justify-between px-1">
+              <div className="text-[10px] text-neutral-500 flex flex-col sm:flex-row items-center justify-between px-1 gap-1 text-center sm:text-left">
                 <span>🍪 Chocobi = +10 pts • ⭐ Star = +25 pts • 🫑 Pepper = -1 Life</span>
                 <span className="font-bold text-neutral-700">Futaba Kindergarten Arcade</span>
               </div>

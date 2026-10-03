@@ -52,13 +52,13 @@ export const CharacterSection: React.FC<Props> = ({
   return (
     <section
       id={`char-${character.id}`}
-      className="relative w-full min-h-[85vh] flex flex-col justify-center py-8 sm:py-14 px-4 sm:px-8 md:px-12 select-none border-b border-neutral-200/70 overflow-hidden"
+      className="relative w-full min-h-[auto] sm:min-h-[85vh] flex flex-col justify-center py-6 sm:py-12 md:py-14 px-3 sm:px-8 md:px-12 select-none border-b border-neutral-200/70 overflow-hidden"
     >
       {/* Dynamic diagonal theatrical accent ribbon */}
       <div
         className={`absolute -top-32 ${
           isEven ? '-right-28' : '-left-28'
-        } w-[55%] h-[160%] transform ${
+        } w-[65%] sm:w-[55%] h-[160%] transform ${
           isEven ? '-rotate-12' : 'rotate-12'
         } pointer-events-none opacity-15 transition-all duration-700`}
         style={{ backgroundColor: currentColor }}
@@ -66,9 +66,9 @@ export const CharacterSection: React.FC<Props> = ({
 
       {/* Chapter Index Watermark */}
       <div
-        className={`absolute top-6 ${
-          isEven ? 'right-8' : 'left-8'
-        } text-7xl sm:text-9xl font-black font-mono tracking-tighter opacity-5 pointer-events-none select-none`}
+        className={`absolute top-4 sm:top-6 ${
+          isEven ? 'right-4 sm:right-8' : 'left-4 sm:left-8'
+        } text-5xl sm:text-8xl md:text-9xl font-black font-mono tracking-tighter opacity-5 pointer-events-none select-none`}
       >
         0{index + 1}
       </div>
@@ -78,10 +78,10 @@ export const CharacterSection: React.FC<Props> = ({
         <div
           className={`flex flex-col ${
             isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'
-          } items-center justify-between gap-6 md:gap-12 w-full`}
+          } items-center justify-between gap-5 sm:gap-8 md:gap-12 w-full`}
         >
           {/* CARTOON VISUAL STAGE */}
-          <div className="relative w-full lg:w-1/2 flex items-center justify-center min-h-[380px] sm:min-h-[460px] md:min-h-[500px]">
+          <div className="relative w-full lg:w-1/2 flex items-center justify-center min-h-[270px] sm:min-h-[400px] md:min-h-[480px]">
             {/* Smooth cartoon entrance animation container */}
             <div className="relative w-full max-w-md flex items-center justify-center">
               <ShinchanCharacterArt
@@ -105,10 +105,10 @@ export const CharacterSection: React.FC<Props> = ({
 
           {/* CHARACTER DOSSIER & THEATRICAL TEXT */}
           <motion.div
-            initial={{ opacity: 0, x: isEven ? 80 : -80, y: 20 }}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: false, amount: 0.25 }}
-            transition={{ type: 'spring', damping: 20, stiffness: 80, delay: 0.1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ type: 'spring', damping: 22, stiffness: 90, delay: 0.05 }}
             className="w-full lg:w-1/2 flex flex-col justify-center max-w-xl"
           >
             {/* Top Label: Japanese Title + Movie Role */}
@@ -246,14 +246,14 @@ export const CharacterSection: React.FC<Props> = ({
             </div>
 
             {/* Action Buttons: Wallpapers & Direct Jumps */}
-            <div className="mt-5 flex flex-wrap items-center gap-3 pt-2">
+            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => {
                   sounds.playBlip(680);
                   onDownloadWallpaper('widescreen', character.name);
                 }}
-                className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 sm:bg-transparent border border-neutral-300/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>→</span>
                 <span>4K WIDESCREEN WALLPAPER</span>
@@ -265,7 +265,7 @@ export const CharacterSection: React.FC<Props> = ({
                   sounds.playBlip(680);
                   onDownloadWallpaper('standard', character.name);
                 }}
-                className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 sm:bg-transparent border border-neutral-300/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>→</span>
                 <span>MOBILE WALLPAPER</span>
@@ -274,7 +274,7 @@ export const CharacterSection: React.FC<Props> = ({
               <button
                 type="button"
                 onClick={onScrollToCinema}
-                className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 hover:text-red-700 transition-colors"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-red-50/80 sm:bg-transparent border border-red-200/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 hover:text-red-700 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>▶</span>
                 <span>LIVING 3D CINEMA REEL</span>
