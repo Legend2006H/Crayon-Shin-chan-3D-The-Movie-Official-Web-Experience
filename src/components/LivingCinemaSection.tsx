@@ -49,7 +49,7 @@ export const LivingCinemaSection: React.FC = () => {
       />
 
       {/* Seamless blend from the website background into the video at the top */}
-      <div className="absolute top-0 left-0 right-0 h-28 sm:h-36 md:h-44 bg-gradient-to-b from-[#f0f2f5] via-[#f0f2f5]/40 to-transparent pointer-events-none z-10" />
+      <div className="absolute top-0 left-0 right-0 h-28 sm:h-36 md:h-44 bg-gradient-to-b from-[#f0f2f5] dark:from-[#090a0f] via-[#f0f2f5]/40 dark:via-[#090a0f]/40 to-transparent pointer-events-none z-10 transition-colors duration-300" />
 
       {/* Seamless bottom vignette for clean transition into the footer */}
       <div className="absolute bottom-0 left-0 right-0 h-32 sm:h-40 bg-gradient-to-t from-neutral-950 via-neutral-950/70 to-transparent pointer-events-none z-10" />

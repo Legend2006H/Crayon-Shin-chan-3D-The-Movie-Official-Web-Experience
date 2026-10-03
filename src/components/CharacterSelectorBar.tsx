@@ -11,6 +11,8 @@ interface Props {
   onOpenLegal: () => void;
   sparkleEnabled?: boolean;
   onToggleSparkle?: () => void;
+  darkMode?: boolean;
+  onToggleTheme?: () => void;
 }
 
 export const CharacterSelectorBar: React.FC<Props> = ({
@@ -21,9 +23,11 @@ export const CharacterSelectorBar: React.FC<Props> = ({
   onOpenLegal,
   sparkleEnabled,
   onToggleSparkle,
+  darkMode = true,
+  onToggleTheme,
 }) => {
   return (
-    <footer className="relative z-30 w-full flex items-center justify-between px-2.5 sm:px-6 md:px-8 py-2 sm:py-3 select-none border-t border-neutral-300/80 bg-white/85 backdrop-blur-md pb-safe">
+    <footer className="relative z-30 w-full flex items-center justify-between px-2.5 sm:px-6 md:px-8 py-2 sm:py-3 select-none border-t border-neutral-300/80 dark:border-neutral-800 bg-white/85 dark:bg-neutral-950/90 backdrop-blur-md pb-safe transition-colors duration-300">
       {/* Left: AUDIO TOGGLE & LIVE OSCILLOSCOPE */}
       <div className="flex items-center gap-2 shrink-0">
         <button
@@ -32,7 +36,7 @@ export const CharacterSelectorBar: React.FC<Props> = ({
             sounds.playBlip(600);
             onToggleAudio();
           }}
-          className="text-[10px] sm:text-xs font-black tracking-wider sm:tracking-widest text-neutral-600 hover:text-neutral-950 uppercase flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer py-1"
+          className="text-[10px] sm:text-xs font-black tracking-wider sm:tracking-widest text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white uppercase flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer py-1"
           title="Toggle Audio"
           aria-label="Toggle Audio"
         >
@@ -51,13 +55,16 @@ export const CharacterSelectorBar: React.FC<Props> = ({
         </button>
 
         {/* Live Audio Oscilloscope Canvas */}
-        <div className="hidden sm:flex items-center pl-2 border-l border-neutral-300">
+        <div className="hidden sm:flex items-center pl-2 border-l border-neutral-300 dark:border-neutral-800">
           <AudioVisualizer width={52} height={16} />
         </div>
       </div>
 
       {/* Center: 6 Character Avatars */}
-      <div className="flex items-center gap-1.5 xs:gap-2.5 sm:gap-4 md:gap-6 overflow-x-auto no-scrollbar py-0.5">
+      <div
+        className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-4 overflow-x-auto no-scrollbar py-1 px-1"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         {CHARACTERS.map((char) => {
           const isActive = char.id === activeCharacterId;
 
@@ -76,10 +83,10 @@ export const CharacterSelectorBar: React.FC<Props> = ({
                 }
                 onSelectCharacter(char.id);
               }}
-              className={`group relative p-1.5 rounded-full transition-all duration-200 ${
+              className={`group relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 shrink-0 cursor-pointer ${
                 isActive
-                  ? 'bg-neutral-900 text-white scale-110 shadow-md ring-2 ring-red-500/80 ring-offset-2'
-                  : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/80 hover:scale-105'
+                  ? 'bg-neutral-900 text-white dark:bg-neutral-800 dark:text-white ring-2 ring-red-500 shadow-md dark:shadow-[0_0_12px_rgba(239,68,68,0.5)]'
+                  : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-200/80 dark:hover:bg-neutral-800/80'
               }`}
               title={`${char.name} (${char.japaneseName})`}
               aria-label={char.name}
@@ -175,22 +182,35 @@ export const CharacterSelectorBar: React.FC<Props> = ({
                 )}
               </div>
 
-              {/* Active Indicator Dot */}
+              {/* Active Indicator Dot inside button bounds */}
               {isActive && (
-                <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-600" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.9)] pointer-events-none" />
               )}
             </button>
           );
         })}
       </div>
 
-      {/* Right: FX TOGGLE & LEGAL DROPDOWN */}
+      {/* Right: THEME TOGGLE, FX TOGGLE & LEGAL DROPDOWN */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {onToggleTheme && darkMode !== undefined && (
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="flex items-center gap-1 text-[10px] font-mono font-bold text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white uppercase cursor-pointer py-1"
+            title={darkMode ? 'Switch to Light Mode' : 'Switch to Cinema Dark Mode'}
+          >
+            <span className="hidden sm:inline">THEME:</span>
+            <span className={darkMode ? 'text-cyan-600 dark:text-cyan-400 font-extrabold' : 'text-amber-600 dark:text-amber-400 font-extrabold'}>
+              {darkMode ? 'DARK' : 'LIGHT'}
+            </span>
+          </button>
+        )}
         {sparkleEnabled !== undefined && onToggleSparkle && (
           <button
             type="button"
             onClick={onToggleSparkle}
-            className="hidden md:flex items-center gap-1 text-[10px] font-mono font-bold text-neutral-500 hover:text-neutral-900 uppercase cursor-pointer"
+            className="hidden md:flex items-center gap-1 text-[10px] font-mono font-bold text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white uppercase cursor-pointer py-1"
             title="Toggle Anime Stardust Cursor Particles"
           >
             <span>FX:</span>
@@ -205,7 +225,7 @@ export const CharacterSelectorBar: React.FC<Props> = ({
             sounds.playBlip(540);
             onOpenLegal();
           }}
-          className="text-[10px] sm:text-xs font-black tracking-widest text-neutral-600 hover:text-neutral-950 uppercase flex items-center gap-1 transition-colors cursor-pointer"
+          className="text-[10px] sm:text-xs font-black tracking-widest text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white uppercase flex items-center gap-1 transition-colors cursor-pointer py-1"
         >
           <span>LEGAL</span>
           <span className="text-[9px]">▾</span>

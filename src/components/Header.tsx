@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sun, Moon } from 'lucide-react';
 import { MovieBanner } from './MovieBanner';
 import { sounds } from '../utils/audio';
 
@@ -11,6 +12,8 @@ interface Props {
   onSocialClick?: (platform: string) => void;
   onTickerClick?: () => void;
   onOpenMenu?: () => void;
+  darkMode?: boolean;
+  onToggleTheme?: () => void;
 }
 
 export const Header: React.FC<Props> = ({
@@ -20,6 +23,8 @@ export const Header: React.FC<Props> = ({
   onSocialClick,
   onTickerClick,
   onOpenMenu,
+  darkMode = true,
+  onToggleTheme,
 }) => {
   const navItems = [
     { id: 'slide-1' as const, label: 'SHIN-CHAN' },
@@ -84,8 +89,31 @@ export const Header: React.FC<Props> = ({
           </span>
         </div>
 
-        {/* Right Section: Mobile Menu Trigger & Social Links */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Right Section: Theme Toggle, Mobile Menu Trigger & Social Links */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Cinema Dark / Manga Light Mode Toggle */}
+          {onToggleTheme && (
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white border border-white/15 text-[10px] font-black tracking-wider uppercase transition-all active:scale-95 cursor-pointer shadow-2xs"
+              title={darkMode ? 'Switch to Manga Light Mode' : 'Switch to Cinema Dark Mode'}
+              aria-label="Toggle Cinema Dark / Light Mode"
+            >
+              {darkMode ? (
+                <>
+                  <Moon className="w-3 h-3 text-cyan-300 fill-cyan-300/20" />
+                  <span className="hidden xs:inline text-[9px] font-mono text-cyan-300">DARK</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="w-3 h-3 text-amber-400 fill-amber-400/20" />
+                  <span className="hidden xs:inline text-[9px] font-mono text-amber-400">LIGHT</span>
+                </>
+              )}
+            </button>
+          )}
+
           {/* Quick Menu Button for Mobile */}
           <button
             type="button"
@@ -93,7 +121,7 @@ export const Header: React.FC<Props> = ({
               sounds.playScan();
               onOpenMenu?.();
             }}
-            className="flex items-center gap-1 px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white border border-white/15 text-[10px] font-black tracking-wider uppercase transition-all active:scale-95"
+            className="flex items-center gap-1 px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-neutral-200 hover:text-white border border-white/15 text-[10px] font-black tracking-wider uppercase transition-all active:scale-95 cursor-pointer"
             title="Open Kasukabe Navigation"
             aria-label="Open Navigation Menu"
           >

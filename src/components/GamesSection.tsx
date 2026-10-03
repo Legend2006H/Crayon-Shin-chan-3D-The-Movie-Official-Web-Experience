@@ -296,7 +296,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center px-4 sm:px-8 py-6 select-none overflow-hidden">
-      <div className="absolute inset-0 bg-neutral-100/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-neutral-100/60 dark:bg-neutral-950/80 pointer-events-none transition-colors duration-300" />
 
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8">
@@ -306,7 +306,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
           <button
             type="button"
             onClick={onBackToCharacters}
-            className="mt-3 text-xs font-black text-neutral-600 hover:text-red-600 uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="mt-3 text-xs font-black text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <span>←</span>
             <span>BACK TO CHARACTERS</span>
@@ -317,16 +317,16 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
         <div className="w-full lg:w-2/3 flex flex-col items-center">
           {!isPlayingGame ? (
             /* GAME SELECTION CARD */
-            <div className="w-full max-w-md bg-white/95 border border-neutral-300 rounded-lg shadow-xl p-5 flex flex-col items-center text-center">
-              <div className="text-xl sm:text-2xl font-black text-neutral-900 uppercase tracking-widest font-sans">
+            <div className="w-full max-w-md bg-white/95 dark:bg-neutral-900/95 border border-neutral-300 dark:border-neutral-800 rounded-lg shadow-xl p-5 flex flex-col items-center text-center transition-colors duration-300">
+              <div className="text-xl sm:text-2xl font-black text-neutral-900 dark:text-white uppercase tracking-widest font-sans">
                 KASUKABE ARCADE
               </div>
-              <div className="text-xs font-bold text-neutral-500 font-mono mb-4">
+              <div className="text-xs font-bold text-neutral-500 dark:text-neutral-400 font-mono mb-4">
                 GAME {activeGameIdx + 1} OF {MINI_GAMES.length}
               </div>
 
               {/* Game Card Preview Box */}
-              <div className="relative w-full aspect-16/10 bg-neutral-900 rounded-lg overflow-hidden shadow-inner group border border-neutral-300">
+              <div className="relative w-full aspect-16/10 bg-neutral-900 rounded-lg overflow-hidden shadow-inner group border border-neutral-300 dark:border-neutral-700">
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-amber-500 via-rose-500 to-indigo-900 text-white">
                   {/* Chocobi / Action Kamen Artwork */}
                   <div className="flex flex-col items-center gap-2">
@@ -362,7 +362,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
 
               {/* Game Carousel Switcher */}
               <div className="mt-5 flex flex-col items-center gap-1.5">
-                <span className="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">
+                <span className="text-[10px] font-bold tracking-widest text-neutral-500 dark:text-neutral-400 uppercase">
                   SELECT A GAME TO PLAY
                 </span>
 
@@ -370,7 +370,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                   <button
                     type="button"
                     onClick={handlePrevGame}
-                    className="w-7 h-7 rounded-full border border-neutral-400 hover:border-neutral-900 text-neutral-700 hover:text-neutral-900 flex items-center justify-center transition-colors bg-white shadow-xs cursor-pointer"
+                    className="w-7 h-7 rounded-full border border-neutral-400 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white flex items-center justify-center transition-colors bg-white dark:bg-neutral-800 shadow-xs cursor-pointer"
                     title="Previous Game"
                     aria-label="Previous Game"
                   >
@@ -382,7 +382,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                       <span
                         key={i}
                         className={`w-2 h-2 rounded-full transition-all ${
-                          activeGameIdx === i ? 'bg-red-600 scale-125' : 'bg-neutral-300'
+                          activeGameIdx === i ? 'bg-red-600 scale-125' : 'bg-neutral-300 dark:bg-neutral-700'
                         }`}
                       />
                     ))}
@@ -391,7 +391,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                   <button
                     type="button"
                     onClick={handleNextGame}
-                    className="w-7 h-7 rounded-full border border-neutral-400 hover:border-neutral-900 text-neutral-700 hover:text-neutral-900 flex items-center justify-center transition-colors bg-white shadow-xs cursor-pointer"
+                    className="w-7 h-7 rounded-full border border-neutral-400 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white flex items-center justify-center transition-colors bg-white dark:bg-neutral-800 shadow-xs cursor-pointer"
                     title="Next Game"
                     aria-label="Next Game"
                   >
@@ -403,14 +403,14 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
           ) : (
             /* PLAYABLE CHOCOBI BONANZA GAME CANVAS */
             <div
-              className={`w-full max-w-xl bg-white border border-neutral-300 rounded-lg shadow-2xl p-4 sm:p-5 flex flex-col gap-3 transition-transform ${
+              className={`w-full max-w-xl bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-lg shadow-2xl p-4 sm:p-5 flex flex-col gap-3 transition-all duration-300 ${
                 screenShake ? 'translate-x-1 -translate-y-1' : ''
               }`}
             >
-              <div className="flex items-center justify-between border-b border-neutral-200 pb-2">
+              <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping" />
-                  <h3 className="text-sm sm:text-base font-black uppercase text-neutral-900 font-sans">
+                  <h3 className="text-sm sm:text-base font-black uppercase text-neutral-900 dark:text-white font-sans">
                     CHOCOBI BONANZA: CATCH THE SNACKS!
                   </h3>
                 </div>
@@ -422,7 +422,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border transition-colors cursor-pointer ${
                       crtMode
                         ? 'bg-neutral-900 text-amber-300 border-neutral-800'
-                        : 'bg-neutral-100 text-neutral-500 border-neutral-300'
+                        : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border-neutral-300 dark:border-neutral-700'
                     }`}
                     title="Toggle Arcade CRT Scanline Shader"
                   >
@@ -432,7 +432,7 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
                   <button
                     type="button"
                     onClick={() => setIsPlayingGame(false)}
-                    className="text-xs font-bold text-neutral-500 hover:text-neutral-900 bg-neutral-100 hover:bg-neutral-200 px-2 py-1 rounded cursor-pointer"
+                    className="text-xs font-bold text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 px-2 py-1 rounded cursor-pointer"
                   >
                     ✕ Exit
                   </button>
@@ -585,9 +585,9 @@ export const GamesSection: React.FC<Props> = ({ onBackToCharacters }) => {
               </div>
 
               {/* Instructions */}
-              <div className="text-[10px] text-neutral-500 flex flex-col sm:flex-row items-center justify-between px-1 gap-1 text-center sm:text-left">
+              <div className="text-[10px] text-neutral-500 dark:text-neutral-400 flex flex-col sm:flex-row items-center justify-between px-1 gap-1 text-center sm:text-left">
                 <span>🍪 Chocobi = +10 pts • ⭐ Star = +35 pts • 🫑 Pepper = -1 Life</span>
-                <span className="font-bold text-neutral-700">Futaba Kindergarten Arcade</span>
+                <span className="font-bold text-neutral-700 dark:text-neutral-300">Futaba Kindergarten Arcade</span>
               </div>
             </div>
           )}

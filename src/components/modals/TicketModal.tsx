@@ -51,7 +51,7 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
         className="absolute inset-0 bg-neutral-950/80 backdrop-blur-md animate-in fade-in duration-200"
       />
 
-      <div className="relative z-10 w-full max-w-xl bg-white rounded-lg shadow-2xl overflow-hidden border border-neutral-300 animate-in zoom-in-95 duration-200">
+      <div className="relative z-10 w-full max-w-xl bg-white dark:bg-neutral-900 rounded-lg shadow-2xl overflow-hidden border border-neutral-300 dark:border-neutral-800 animate-in zoom-in-95 duration-200 transition-colors duration-300">
         {/* Header */}
         <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white p-4 flex items-center justify-between">
           <div>
@@ -62,35 +62,35 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
               THEATERS NEAR {zipCode || 'KASUKABE'}
             </h3>
           </div>
-          <button onClick={onClose} className="text-white hover:text-red-200 text-sm font-bold">
+          <button onClick={onClose} className="text-white hover:text-red-200 text-sm font-bold cursor-pointer">
             ✕
           </button>
         </div>
 
         {confirmed ? (
           <div className="p-8 text-center flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
+            <div className="w-14 h-14 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
               <svg className="w-8 h-8 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h4 className="text-xl font-black text-neutral-900 uppercase">
+            <h4 className="text-xl font-black text-neutral-900 dark:text-white uppercase">
               TICKETS CONFIRMED!
             </h4>
-            <p className="text-sm text-neutral-600 mt-1 max-w-sm">
+            <p className="text-sm text-neutral-600 dark:text-neutral-300 mt-1 max-w-sm">
               You have reserved {ticketCount} tickets for Crayon Shin-chan 3D at{' '}
-              <span className="font-bold text-neutral-900">{theaters[selectedTheater].name}</span> for{' '}
-              <span className="font-bold text-red-600">{selectedTime}</span>.
+              <span className="font-bold text-neutral-900 dark:text-white">{theaters[selectedTheater].name}</span> for{' '}
+              <span className="font-bold text-red-600 dark:text-red-400">{selectedTime}</span>.
             </p>
-            <div className="mt-4 p-3 bg-neutral-100 rounded text-xs font-mono text-neutral-700">
+            <div className="mt-4 p-3 bg-neutral-100 dark:bg-neutral-800 rounded text-xs font-mono text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700">
               CONFIRMATION: #SHINCHAN-3D-{Math.floor(100000 + Math.random() * 900000)}
             </div>
-            <div className="mt-3 text-[11px] text-emerald-700 font-bold">
+            <div className="mt-3 text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">
               ★ Free Chocobi Movie Popcorn Bucket included with every ticket!
             </div>
             <button
               onClick={onClose}
-              className="mt-5 bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs uppercase px-5 py-2.5 rounded shadow"
+              className="mt-5 bg-neutral-900 dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-100 text-white dark:text-neutral-900 font-bold text-xs uppercase px-5 py-2.5 rounded shadow cursor-pointer"
             >
               Done
             </button>
@@ -105,14 +105,14 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
                   onClick={() => setSelectedTheater(idx)}
                   className={`p-3.5 rounded border cursor-pointer transition-all ${
                     selectedTheater === idx
-                      ? 'border-red-600 bg-red-50/50 shadow-xs'
-                      : 'border-neutral-200 hover:border-neutral-400 bg-white'
+                      ? 'border-red-600 dark:border-red-500 bg-red-50/50 dark:bg-red-950/20 shadow-xs'
+                      : 'border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 bg-white dark:bg-neutral-900/60'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <h4 className="font-bold text-sm text-neutral-900">{th.name}</h4>
-                      <p className="text-xs text-neutral-500">
+                      <h4 className="font-bold text-sm text-neutral-900 dark:text-white">{th.name}</h4>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
                         {th.address} · {th.distance}
                       </p>
                     </div>
@@ -120,7 +120,7 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
                       {th.formats.map((f, i) => (
                         <span
                           key={i}
-                          className="text-[9px] font-bold bg-neutral-100 text-neutral-700 px-1.5 py-0.5 rounded border border-neutral-300"
+                          className="text-[9px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 px-1.5 py-0.5 rounded border border-neutral-300 dark:border-neutral-700"
                         >
                           {f}
                         </span>
@@ -139,10 +139,10 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
                           setSelectedTheater(idx);
                           setSelectedTime(t);
                         }}
-                        className={`text-xs font-bold px-2.5 py-1 rounded transition-colors ${
+                        className={`text-xs font-bold px-2.5 py-1 rounded transition-colors cursor-pointer ${
                           selectedTheater === idx && selectedTime === t
                             ? 'bg-red-600 text-white shadow-xs'
-                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-800'
+                            : 'bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200'
                         }`}
                       >
                         {t}
@@ -154,20 +154,20 @@ export const TicketModal: React.FC<Props> = ({ isOpen, onClose, zipCode }) => {
             </div>
 
             {/* Ticket count & Checkout */}
-            <div className="pt-3 border-t border-neutral-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <div className="flex items-center justify-between sm:justify-start gap-2">
-                <span className="text-xs font-bold text-neutral-700">TICKETS:</span>
-                <div className="flex items-center border border-neutral-300 rounded overflow-hidden">
+                <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300">TICKETS:</span>
+                <div className="flex items-center border border-neutral-300 dark:border-neutral-700 rounded overflow-hidden">
                   <button
                     onClick={() => setTicketCount(Math.max(1, ticketCount - 1))}
-                    className="w-8 h-8 bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 text-xs font-bold flex items-center justify-center cursor-pointer"
+                    className="w-8 h-8 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 active:bg-neutral-300 dark:active:bg-neutral-600 text-neutral-900 dark:text-white text-xs font-bold flex items-center justify-center cursor-pointer"
                   >
                     -
                   </button>
-                  <span className="px-3 py-1 text-xs font-bold font-mono min-w-8 text-center">{ticketCount}</span>
+                  <span className="px-3 py-1 text-xs font-bold font-mono min-w-8 text-center text-neutral-900 dark:text-white">{ticketCount}</span>
                   <button
                     onClick={() => setTicketCount(Math.min(10, ticketCount + 1))}
-                    className="w-8 h-8 bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 text-xs font-bold flex items-center justify-center cursor-pointer"
+                    className="w-8 h-8 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 active:bg-neutral-300 dark:active:bg-neutral-600 text-neutral-900 dark:text-white text-xs font-bold flex items-center justify-center cursor-pointer"
                   >
                     +
                   </button>

@@ -38,12 +38,45 @@ export default function App() {
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(true);
 
+  // Dark mode state with persistence in localStorage and documentElement synchronization
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('shinchan_theme');
+      if (saved) return saved === 'dark';
+      // Default to theatrical cinema dark mode
+      return true;
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+      localStorage.setItem('shinchan_theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+      localStorage.setItem('shinchan_theme', 'light');
+    }
+  }, [darkMode]);
+
   // Toast notification
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleToggleTheme = () => {
+    sounds.playBlip(darkMode ? 520 : 680);
+    setDarkMode((prev) => {
+      const next = !prev;
+      showToast(next ? 'THEME: CINEMA DARK MODE' : 'THEME: MANGA LIGHT MODE');
+      return next;
+    });
   };
 
   const handleToggleAudio = () => {
@@ -112,7 +145,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0f2f5] text-neutral-900 font-sans relative selection:bg-red-600 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-[#f0f2f5] dark:bg-[#090a0f] text-neutral-900 dark:text-neutral-100 font-sans relative selection:bg-red-600 selection:text-white overflow-x-hidden transition-colors duration-300">
       {/* Anime Stardust Cursor Canvas Particles */}
       <SparkleCursor enabled={sparkleEnabled} />
 
@@ -131,6 +164,8 @@ export default function App() {
           showToast(`Opening Crayon Shin-chan 3D on ${platform}!`);
         }}
         onOpenMenu={() => setNavDrawerOpen(true)}
+        darkMode={darkMode}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Theatrical Showcase Experience */}
@@ -154,7 +189,7 @@ export default function App() {
         ))}
 
         {/* Kasukabe Arcade Section with Retro CRT Shader & Canvas FX */}
-        <section id="kasukabe-arcade" className="relative w-full py-16 border-b border-neutral-300/80 bg-neutral-100/50">
+        <section id="kasukabe-arcade" className="relative w-full py-16 border-b border-neutral-300/80 dark:border-neutral-800 bg-neutral-100/50 dark:bg-neutral-950/70 transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-4">
             <GamesSection onBackToCharacters={() => scrollToId('char-shinchan')} />
           </div>
@@ -191,6 +226,8 @@ export default function App() {
           scrollToId(`char-${id}`);
           setActiveCharacterId(id);
         }}
+        darkMode={darkMode}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Fixed Floating Bottom Character Bar with Audio Oscilloscope & Legal Controls */}
@@ -206,12 +243,14 @@ export default function App() {
           onOpenLegal={() => setLegalOpen(true)}
           sparkleEnabled={sparkleEnabled}
           onToggleSparkle={() => setSparkleEnabled(!sparkleEnabled)}
+          darkMode={darkMode}
+          onToggleTheme={handleToggleTheme}
         />
       </div>
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-neutral-900 text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-neutral-700 animate-in fade-in slide-in-from-bottom duration-200">
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-950 text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-neutral-700 dark:border-neutral-300 animate-in fade-in slide-in-from-bottom duration-200">
           {toastMessage}
         </div>
       )}

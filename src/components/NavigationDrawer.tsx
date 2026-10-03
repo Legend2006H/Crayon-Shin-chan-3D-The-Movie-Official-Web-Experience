@@ -7,6 +7,8 @@ interface Props {
   onToggle: () => void;
   onSelectNav: (section: 'characters' | 'games' | 'cinema' | 'trailers' | 'tickets' | 'wallpapers') => void;
   onSelectCharacter: (id: string) => void;
+  darkMode?: boolean;
+  onToggleTheme?: () => void;
 }
 
 export const NavigationDrawer: React.FC<Props> = ({
@@ -14,6 +16,8 @@ export const NavigationDrawer: React.FC<Props> = ({
   onToggle,
   onSelectNav,
   onSelectCharacter,
+  darkMode = true,
+  onToggleTheme,
 }) => {
   return (
     <>
@@ -24,19 +28,19 @@ export const NavigationDrawer: React.FC<Props> = ({
             sounds.playScan();
             onToggle();
           }}
-          className="group flex items-center gap-1.5 py-3 sm:py-4 pl-2 pr-1 bg-white/90 hover:bg-white text-neutral-800 border-y border-l border-neutral-300 rounded-l-lg shadow-lg backdrop-blur-md transition-all hover:pl-3 active:scale-95 cursor-pointer"
+          className="group flex items-center gap-1.5 py-3 sm:py-4 pl-2 pr-1 bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border-y border-l border-neutral-300 dark:border-neutral-700 rounded-l-lg shadow-lg backdrop-blur-md transition-all hover:pl-3 active:scale-95 cursor-pointer"
           title="Open Kasukabe Navigation"
           aria-label="Open Navigation Menu"
         >
           {/* Concentric Circle Reticle */}
           <div className="relative w-4 h-4 flex items-center justify-center">
-            <span className="absolute inset-0 rounded-full border border-neutral-500 group-hover:border-red-600 animate-pulse" />
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-red-600" />
+            <span className="absolute inset-0 rounded-full border border-neutral-500 dark:border-neutral-400 group-hover:border-red-600 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-neutral-800 dark:bg-neutral-200 group-hover:bg-red-600" />
           </div>
 
           {/* Vertical "NAVIGATION" Text */}
           <span
-            className="text-[9px] font-black tracking-widest text-neutral-700 group-hover:text-red-600 uppercase"
+            className="text-[9px] font-black tracking-widest text-neutral-700 dark:text-neutral-300 group-hover:text-red-600 uppercase"
             style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
           >
             NAVIGATION
@@ -130,6 +134,26 @@ export const NavigationDrawer: React.FC<Props> = ({
                   ))}
                 </div>
               </div>
+
+              {/* Cinema Mode / Theme Mode Toggle */}
+              {onToggleTheme && (
+                <div className="mt-6 pt-3 border-t border-neutral-800 flex items-center justify-between">
+                  <span className="text-[10px] font-black tracking-widest text-neutral-400 uppercase">
+                    EXPERIENCE THEME
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onToggleTheme();
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-mono font-bold tracking-wider transition-colors cursor-pointer text-white"
+                  >
+                    <span className={darkMode ? 'text-cyan-400' : 'text-amber-400'}>
+                      {darkMode ? '🌙 CINEMA DARK' : '☀️ MANGA LIGHT'}
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Footer Notice */}

@@ -52,7 +52,7 @@ export const CharacterSection: React.FC<Props> = ({
   return (
     <section
       id={`char-${character.id}`}
-      className="relative w-full min-h-[auto] sm:min-h-[85vh] flex flex-col justify-center py-6 sm:py-12 md:py-14 px-3 sm:px-8 md:px-12 select-none border-b border-neutral-200/70 overflow-hidden"
+      className="relative w-full min-h-[auto] sm:min-h-[85vh] flex flex-col justify-center py-6 sm:py-12 md:py-14 px-3 sm:px-8 md:px-12 select-none border-b border-neutral-200/70 dark:border-neutral-800/80 overflow-hidden transition-colors duration-300"
     >
       {/* Dynamic diagonal theatrical accent ribbon */}
       <div
@@ -60,7 +60,7 @@ export const CharacterSection: React.FC<Props> = ({
           isEven ? '-right-28' : '-left-28'
         } w-[65%] sm:w-[55%] h-[160%] transform ${
           isEven ? '-rotate-12' : 'rotate-12'
-        } pointer-events-none opacity-15 transition-all duration-700`}
+        } pointer-events-none opacity-15 dark:opacity-20 transition-all duration-700`}
         style={{ backgroundColor: currentColor }}
       />
 
@@ -68,7 +68,7 @@ export const CharacterSection: React.FC<Props> = ({
       <div
         className={`absolute top-4 sm:top-6 ${
           isEven ? 'right-4 sm:right-8' : 'left-4 sm:left-8'
-        } text-5xl sm:text-8xl md:text-9xl font-black font-mono tracking-tighter opacity-5 pointer-events-none select-none`}
+        } text-5xl sm:text-8xl md:text-9xl font-black font-mono tracking-tighter text-neutral-900 dark:text-white opacity-5 pointer-events-none select-none`}
       >
         0{index + 1}
       </div>
@@ -116,14 +116,14 @@ export const CharacterSection: React.FC<Props> = ({
               <span className="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-widest bg-red-600 text-white shadow-xs">
                 {character.japaneseName}
               </span>
-              <span className="text-[11px] font-mono font-bold tracking-wider text-neutral-500 uppercase">
+              <span className="text-[11px] font-mono font-bold tracking-wider text-neutral-500 dark:text-neutral-400 uppercase">
                 {character.role}
               </span>
             </div>
 
             {/* Character Main Title */}
             <div className="flex items-center gap-3 mb-2">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-neutral-900 font-sans">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight text-neutral-900 dark:text-white font-sans">
                 {character.name}
               </h2>
 
@@ -134,7 +134,7 @@ export const CharacterSection: React.FC<Props> = ({
                 className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all ${
                   isPlayingQuote
                     ? 'bg-red-600 border-red-600 text-white scale-110 shadow-lg'
-                    : 'border-neutral-400/80 text-neutral-700 hover:border-neutral-900 hover:text-neutral-900 bg-white/90 shadow-xs'
+                    : 'border-neutral-400/80 dark:border-neutral-700 text-neutral-700 dark:text-neutral-200 hover:border-neutral-900 dark:hover:border-white hover:text-neutral-900 dark:hover:text-white bg-white/90 dark:bg-neutral-900/90 shadow-xs cursor-pointer'
                 }`}
                 title="Play Character Voice Line"
                 aria-label="Play soundbite"
@@ -157,16 +157,16 @@ export const CharacterSection: React.FC<Props> = ({
             </div>
 
             {/* Character Theatrical Tagline */}
-            <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-red-600 mb-3">
+            <p className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-red-600 dark:text-red-400 mb-3">
               {character.tagline}
             </p>
 
             {/* Japanese Quote & English Catchphrase Box */}
-            <div className="mb-4 p-3.5 rounded-xl bg-white/90 border border-neutral-300/80 shadow-xs">
-              <p className="text-xs sm:text-sm font-black text-neutral-900 mb-1 tracking-tight">
+            <div className="mb-4 p-3.5 rounded-xl bg-white/90 dark:bg-neutral-900/90 border border-neutral-300/80 dark:border-neutral-800 shadow-xs">
+              <p className="text-xs sm:text-sm font-black text-neutral-900 dark:text-white mb-1 tracking-tight">
                 {character.quote}
               </p>
-              <p className="text-[11px] font-bold text-neutral-500 font-mono">
+              <p className="text-[11px] font-bold text-neutral-500 dark:text-neutral-400 font-mono">
                 {character.japaneseQuote}
               </p>
             </div>
@@ -174,10 +174,10 @@ export const CharacterSection: React.FC<Props> = ({
             {/* Civilian Mode / Action Suit Toggle (for Shin-chan) */}
             {character.hasCivilianMode && (
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                   OUTFIT MODE:
                 </span>
-                <div className="inline-flex p-1 rounded-full bg-neutral-200 border border-neutral-300">
+                <div className="inline-flex p-1 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700">
                   <button
                     type="button"
                     onClick={() => {
@@ -186,10 +186,10 @@ export const CharacterSection: React.FC<Props> = ({
                         setIsCivilian(true);
                       }
                     }}
-                    className={`px-3 py-1 text-[10px] font-extrabold uppercase rounded-full transition-all ${
+                    className={`px-3 py-1 text-[10px] font-extrabold uppercase rounded-full transition-all cursor-pointer ${
                       isCivilian
-                        ? 'bg-neutral-900 text-white shadow-xs'
-                        : 'text-neutral-600 hover:text-neutral-900'
+                        ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 shadow-xs'
+                        : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                     }`}
                   >
                     Casual Explorer
@@ -202,10 +202,10 @@ export const CharacterSection: React.FC<Props> = ({
                         setIsCivilian(false);
                       }
                     }}
-                    className={`px-3 py-1 text-[10px] font-extrabold uppercase rounded-full transition-all ${
+                    className={`px-3 py-1 text-[10px] font-extrabold uppercase rounded-full transition-all cursor-pointer ${
                       !isCivilian
-                        ? 'bg-neutral-900 text-white shadow-xs'
-                        : 'text-neutral-600 hover:text-neutral-900'
+                        ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 shadow-xs'
+                        : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
                     }`}
                   >
                     Action Kamen Suit
@@ -215,7 +215,7 @@ export const CharacterSection: React.FC<Props> = ({
             )}
 
             {/* Theatrical Story Dossier (Rich, Authentic Movie Copy) */}
-            <div className="space-y-2 text-xs sm:text-[13px] leading-relaxed text-neutral-700 mb-4">
+            <div className="space-y-2 text-xs sm:text-[13px] leading-relaxed text-neutral-700 dark:text-neutral-300 mb-4">
               {character.description.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
@@ -226,7 +226,7 @@ export const CharacterSection: React.FC<Props> = ({
               {character.traits.map((trait, i) => (
                 <span
                   key={i}
-                  className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase bg-white/80 border border-neutral-300 text-neutral-800"
+                  className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase bg-white/80 dark:bg-neutral-900/80 border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200"
                 >
                   {trait}
                 </span>
@@ -234,13 +234,13 @@ export const CharacterSection: React.FC<Props> = ({
             </div>
 
             {/* Character Specs Box */}
-            <div className="pt-3 border-t border-neutral-300/80 grid grid-cols-2 gap-3 text-[10px] sm:text-xs">
+            <div className="pt-3 border-t border-neutral-300/80 dark:border-neutral-800 grid grid-cols-2 gap-3 text-[10px] sm:text-xs">
               {character.specs.map((spec, i) => (
                 <div key={i} className="flex flex-col">
-                  <span className="font-semibold text-neutral-500 uppercase text-[9px] font-mono">
+                  <span className="font-semibold text-neutral-500 dark:text-neutral-400 uppercase text-[9px] font-mono">
                     {spec.label}
                   </span>
-                  <span className="font-bold text-neutral-900">{spec.value}</span>
+                  <span className="font-bold text-neutral-900 dark:text-white">{spec.value}</span>
                 </div>
               ))}
             </div>
@@ -253,7 +253,7 @@ export const CharacterSection: React.FC<Props> = ({
                   sounds.playBlip(680);
                   onDownloadWallpaper('widescreen', character.name);
                 }}
-                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 sm:bg-transparent border border-neutral-300/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 dark:bg-neutral-900/80 sm:bg-transparent dark:sm:bg-transparent border border-neutral-300/80 dark:border-neutral-700 sm:border-transparent dark:sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 dark:text-neutral-100 hover:text-red-600 dark:hover:text-red-400 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>→</span>
                 <span>4K WIDESCREEN WALLPAPER</span>
@@ -265,7 +265,7 @@ export const CharacterSection: React.FC<Props> = ({
                   sounds.playBlip(680);
                   onDownloadWallpaper('standard', character.name);
                 }}
-                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 sm:bg-transparent border border-neutral-300/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 hover:text-red-600 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-white/80 dark:bg-neutral-900/80 sm:bg-transparent dark:sm:bg-transparent border border-neutral-300/80 dark:border-neutral-700 sm:border-transparent dark:sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-neutral-900 dark:text-neutral-100 hover:text-red-600 dark:hover:text-red-400 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>→</span>
                 <span>MOBILE WALLPAPER</span>
@@ -274,7 +274,7 @@ export const CharacterSection: React.FC<Props> = ({
               <button
                 type="button"
                 onClick={onScrollToCinema}
-                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-red-50/80 sm:bg-transparent border border-red-200/80 sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 hover:text-red-700 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
+                className="inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-lg bg-red-50/80 dark:bg-red-950/40 sm:bg-transparent dark:sm:bg-transparent border border-red-200/80 dark:border-red-900/50 sm:border-transparent dark:sm:border-transparent text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors active:scale-95 cursor-pointer shadow-2xs sm:shadow-none"
               >
                 <span>▶</span>
                 <span>LIVING 3D CINEMA REEL</span>
