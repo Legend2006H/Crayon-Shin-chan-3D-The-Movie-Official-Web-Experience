@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CHARACTERS } from './data/characters';
 import { Header, SlideMode } from './components/Header';
+import { SparkleCursor } from './components/SparkleCursor';
 import { CharacterSection } from './components/CharacterSection';
 import { GamesSection } from './components/GamesSection';
 import { LivingCinemaSection } from './components/LivingCinemaSection';
@@ -15,6 +16,7 @@ import { sounds } from './utils/audio';
 export default function App() {
   const [activeSlide, setActiveSlide] = useState<SlideMode>('slide-1');
   const [activeCharacterId, setActiveCharacterId] = useState<string>('shinchan');
+  const [sparkleEnabled, setSparkleEnabled] = useState(true);
 
   // Modals state
   const [trailerOpen, setTrailerOpen] = useState(false);
@@ -111,6 +113,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f0f2f5] text-neutral-900 font-sans relative selection:bg-red-600 selection:text-white overflow-x-hidden">
+      {/* Anime Stardust Cursor Canvas Particles */}
+      <SparkleCursor enabled={sparkleEnabled} />
+
       {/* Unified Professional Studio Header */}
       <Header
         activeSlide={activeSlide}
@@ -128,9 +133,9 @@ export default function App() {
         onOpenMenu={() => setNavDrawerOpen(true)}
       />
 
-      {/* 4. Main Scrollable Container with Consecutive Character Showcases */}
+      {/* Main Theatrical Showcase Experience */}
       <main className="relative flex-1 w-full pb-20">
-        {/* Character Sections: 6 Full Theatrical Character Showcases */}
+        {/* Character Sections: 6 Full Theatrical Character Showcases with 3D Holographic Tilt & Manga Speedlines */}
         {CHARACTERS.map((char, index) => (
           <CharacterSection
             key={char.id}
@@ -148,18 +153,18 @@ export default function App() {
           />
         ))}
 
-        {/* 5. Kasukabe Arcade Section */}
+        {/* Kasukabe Arcade Section with Retro CRT Shader & Canvas FX */}
         <section id="kasukabe-arcade" className="relative w-full py-16 border-b border-neutral-300/80 bg-neutral-100/50">
           <div className="max-w-6xl mx-auto px-4">
             <GamesSection onBackToCharacters={() => scrollToId('char-shinchan')} />
           </div>
         </section>
 
-        {/* 6. Living 3D Cinema Continuous Video Showcase (At the end of the website) */}
+        {/* Living 3D Cinema Continuous Video Showcase */}
         <LivingCinemaSection />
       </main>
 
-      {/* 7. Right Edge "NAVIGATION" Drawer Toggle */}
+      {/* Right Edge "NAVIGATION" Drawer Toggle */}
       <NavigationDrawer
         isOpen={navDrawerOpen}
         onToggle={() => setNavDrawerOpen(!navDrawerOpen)}
@@ -188,7 +193,7 @@ export default function App() {
         }}
       />
 
-      {/* 8. Fixed Floating Bottom Character Bar with Audio & Legal Controls */}
+      {/* Fixed Floating Bottom Character Bar with Audio Oscilloscope & Legal Controls */}
       <div className="fixed bottom-0 left-0 right-0 z-30 shadow-2xl">
         <CharacterSelectorBar
           activeCharacterId={activeCharacterId}
@@ -199,6 +204,8 @@ export default function App() {
           audioEnabled={audioEnabled}
           onToggleAudio={handleToggleAudio}
           onOpenLegal={() => setLegalOpen(true)}
+          sparkleEnabled={sparkleEnabled}
+          onToggleSparkle={() => setSparkleEnabled(!sparkleEnabled)}
         />
       </div>
 

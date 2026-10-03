@@ -9,7 +9,8 @@ The application is structured as a reactive, component-driven Single Page Applic
 
 ```mermaid
 graph TD
-    App[App.tsx - Master Orchestrator] --> Header[Header.tsx]
+    App[App.tsx - Master Orchestrator] --> Sparkles[SparkleCursor.tsx - Stardust FX Canvas]
+    App --> Header[Header.tsx]
     App --> CharShowcases[CharacterSection.tsx - x6 Showcases]
     App --> KasukabeArcade[GamesSection.tsx - Kasukabe Arcade]
     App --> LivingCinema[LivingCinemaSection.tsx - 3D Cinema Loop]
@@ -19,15 +20,17 @@ graph TD
 
     Header --> MovieBanner[MovieBanner.tsx]
 
-    CharShowcases --> CharArt[ShinchanCharacterArt.tsx]
+    CharShowcases --> CharArt[ShinchanCharacterArt.tsx - 3D Tilt & Speedlines Canvas]
     CharShowcases --> Reticles[ReticleTarget.tsx - Interactive Hotspots]
+
+    CharSelector --> AudioVis[AudioVisualizer.tsx - Live Web Audio Oscilloscope]
 
     Modals --> TrailerModal[TrailerModal.tsx]
     Modals --> TicketModal[TicketModal.tsx]
     Modals --> WallpaperModal[WallpaperModal.tsx]
     Modals --> LegalModal[LegalModal.tsx]
 
-    App -.-> AudioEngine[(utils/audio.ts - Web Audio Synth)]
+    App -.-> AudioEngine[(utils/audio.ts - Web Audio Synth & Analyser)]
     KasukabeArcade -.-> AudioEngine
     CharSelector -.-> AudioEngine
 ```

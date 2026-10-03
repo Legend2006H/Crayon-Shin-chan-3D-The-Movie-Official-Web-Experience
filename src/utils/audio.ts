@@ -4,6 +4,7 @@
 
 class SoundController {
   private ctx: AudioContext | null = null;
+  public analyser: AnalyserNode | null = null;
   public enabled: boolean = true;
 
   private init() {
@@ -11,10 +12,21 @@ class SoundController {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
         this.ctx = new AudioCtx();
+        this.analyser = this.ctx.createAnalyser();
+        this.analyser.fftSize = 64;
+        this.analyser.connect(this.ctx.destination);
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
+    }
+  }
+
+  private connectOutput(node: AudioNode) {
+    if (this.analyser) {
+      node.connect(this.analyser);
+    } else if (this.ctx) {
+      node.connect(this.ctx.destination);
     }
   }
 
@@ -34,7 +46,7 @@ class SoundController {
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
 
       osc.connect(gain);
-      gain.connect(this.ctx.destination);
+      this.connectOutput(gain);
 
       osc.start();
       osc.stop(this.ctx.currentTime + duration);
@@ -59,7 +71,7 @@ class SoundController {
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
 
       osc.connect(gain);
-      gain.connect(this.ctx.destination);
+      this.connectOutput(gain);
 
       osc.start();
       osc.stop(this.ctx.currentTime + 0.2);
@@ -86,7 +98,7 @@ class SoundController {
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
 
       osc.connect(gain);
-      gain.connect(this.ctx.destination);
+      this.connectOutput(gain);
 
       osc.start(now);
       osc.stop(now + 0.35);
@@ -102,7 +114,7 @@ class SoundController {
       gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
 
       osc2.connect(gain2);
-      gain2.connect(this.ctx.destination);
+      this.connectOutput(gain2);
 
       osc2.start(now);
       osc2.stop(now + 0.3);
@@ -117,7 +129,7 @@ class SoundController {
       this.init();
       if (!this.ctx) return;
       const now = this.ctx.currentTime;
-      // Playful bouncy 4-note ascending/descending arpeggio
+      // Playful bouncy 5-note ascending/descending arpeggio
       const notes = [587.33, 783.99, 659.25, 880.00, 1046.50];
       notes.forEach((freq, idx) => {
         const osc = this.ctx!.createOscillator();
@@ -128,7 +140,7 @@ class SoundController {
         gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.18);
 
         osc.connect(gain);
-        gain.connect(this.ctx!.destination);
+        this.connectOutput(gain);
 
         osc.start(now + idx * 0.07);
         osc.stop(now + idx * 0.07 + 0.18);
@@ -156,7 +168,7 @@ class SoundController {
         gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.09);
 
         osc.connect(gain);
-        gain.connect(this.ctx!.destination);
+        this.connectOutput(gain);
 
         osc.start(now + offset);
         osc.stop(now + offset + 0.09);
@@ -166,8 +178,78 @@ class SoundController {
     }
   }
 
+  /**
+   * Theatrical Superpower Psychic Blast (超能力大決戦)
+   * High-energy dimensional shockwave synthesizing sub-bass + resonant shimmering sweeps
+   */
+  public playPsychicBlast() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+
+      // 1. Heavy dimensional sub-impact
+      const subOsc = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(160, now);
+      subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.55);
+
+      subGain.gain.setValueAtTime(0.2, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+      subOsc.connect(subGain);
+      this.connectOutput(subGain);
+      subOsc.start(now);
+      subOsc.stop(now + 0.55);
+
+      // 2. Cosmic telekinetic resonance riser
+      const riseOsc = this.ctx.createOscillator();
+      const riseGain = this.ctx.createGain();
+      riseOsc.type = 'triangle';
+      riseOsc.frequency.setValueAtTime(350, now);
+      riseOsc.frequency.exponentialRampToValueAtTime(1200, now + 0.25);
+      riseOsc.frequency.exponentialRampToValueAtTime(600, now + 0.5);
+
+      riseGain.gain.setValueAtTime(0.12, now);
+      riseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+      riseOsc.connect(riseGain);
+      this.connectOutput(riseGain);
+      riseOsc.start(now);
+      riseOsc.stop(now + 0.5);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Playful comic pop sound for Onomatopoeia bubbles
+   */
+  public playPop() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(900, now);
+      osc.frequency.exponentialRampToValueAtTime(220, now + 0.08);
+
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      osc.connect(gain);
+      this.connectOutput(gain);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } catch {
+      // ignore
+    }
+  }
+
   public playBaymaxChime() {
-    // Retain compatibility alias
     this.playShinchanGiggle();
   }
 }

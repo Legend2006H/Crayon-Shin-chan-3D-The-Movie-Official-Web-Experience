@@ -99,7 +99,7 @@ export const NavigationDrawer: React.FC<Props> = ({
                       );
                       onToggle();
                     }}
-                    className="w-full text-left py-2.5 px-3 rounded hover:bg-neutral-900 text-neutral-300 hover:text-white font-black text-xs uppercase tracking-wider flex items-center justify-between transition-colors group"
+                    className="w-full text-left py-2.5 px-3 rounded hover:bg-neutral-900 text-neutral-300 hover:text-white font-black text-xs uppercase tracking-wider flex items-center justify-between transition-colors group cursor-pointer"
                   >
                     <span>{item.label}</span>
                     <span className="text-neutral-600 group-hover:text-red-500 transition-colors">
