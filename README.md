@@ -168,7 +168,7 @@ disney-big-hero-6-official-experience/
 
 6. **Preview Production Build**:
    ```bash
-   npm run preview
+   npm run preview..........
    ```
 
 ---
