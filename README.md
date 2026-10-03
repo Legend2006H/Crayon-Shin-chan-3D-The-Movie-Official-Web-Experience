@@ -53,18 +53,18 @@ Built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS v4**, the 
 
 ## 📸 Visual Gallery
 
-| Character Showcase (Hero Mode) | Interactive Reticle Inspection |
+| Character Showcase | Interactive Reticle Inspection |
 | :---: | :---: |
-| ![Hero Mode](docs/screenshots/screenshot_hero.png) | ![Shiro Showcase](docs/screenshots/screenshot_shiro.png) |
+| ![Character Showcase](docs/screenshots/character_showcase.png) | ![Interactive Reticle Inspection](docs/screenshots/interactive_reticle_inspection.png) |
 
-| Kasukabe Arcade Mini-Games | Living 3D Cinema Video Showcase |
+| Kasukabe Arcade Mini-Games | Living 3D Cinema Showcase |
 | :---: | :---: |
-| ![Kasukabe Arcade](docs/screenshots/screenshot_arcade.png) | ![Living Cinema](docs/screenshots/screenshot_cinema.png) |
+| ![Kasukabe Arcade Game](docs/screenshots/kasukabe_arcade_game.png) | ![Living 3D Cinema](docs/screenshots/living_3d_cinema.png) |
 
 <div align="center">
 
 ### Complete Landing Page Experience
-![Home Experience](docs/screenshots/screenshot_home.png)
+![Complete Landing Page](docs/screenshots/complete_landing_page.png)
 
 </div>
 
